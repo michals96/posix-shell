@@ -4,12 +4,10 @@
 CC_C = gcc
 
 all:
-	$(CC_C) main.c -o main
-
-main:
-	$(CC_C) main.c main.h -o main
+	$(CC_C) *c *h -o posix
 
 run:
-	./main
+	./posix
+
 clean:
-	rm -f main
+	rm -f posix *h.gch
