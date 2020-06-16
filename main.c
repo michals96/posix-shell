@@ -23,16 +23,20 @@ int main()
 
        value.arguments = parser(line_of_text);
 
-        char *input_command = value.arguments[0];
+        char *first_input_cmd = value.arguments[0];
+        char *second_input_cmd = value.arguments[1];
 
-        if(strcmp(input_command, "exit") == 0) // EXIT
+        if(strcmp(first_input_cmd, "exit") == 0) // EXIT
         {
             break;
         }
 
-        if(strcmp(input_command, "cd") == 0) // CD
+        if(strcmp(first_input_cmd, "cd") == 0) // CD
         {
-            break;
+            if(second_input_cmd == NULL && getenv("HOME") == NULL)
+            {
+                chdir(getenv("HOME"));
+            }
         }
 
     }
