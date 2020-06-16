@@ -8,21 +8,23 @@
 #include "parser.h"
 #include "globals.h"
 
+char *line_of_text = NULL, current_directory[1024];
+
 int main()
 {
     globals value;
 
     while(1)
     {
-        if(getcwd(value.current_directory, sizeof(value.current_directory)) != NULL)
-            printf("\n%s ", value.current_directory);
+        if(getcwd(current_directory, sizeof(current_directory)) != NULL)
+            printf("\n%s ", current_directory);
         
-        getline(&value.line_of_text, &value.size_of_line, stdin);
+        getline(&line_of_text, &value.size_of_line, stdin);
 
-       value.arguments = parser(value.line_of_text);
+       value.arguments = parser(line_of_text);
 
     }
-    
+
     return 0;
 }
 
