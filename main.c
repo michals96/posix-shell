@@ -23,8 +23,19 @@ int main()
 
        value.arguments = parser(line_of_text);
 
-    }
+        char *input_command = value.arguments[0];
 
+        if(strcmp(input_command, "exit") == 0) // EXIT
+        {
+            break;
+        }
+
+        if(strcmp(input_command, "cd") == 0) // CD
+        {
+            break;
+        }
+
+    }
     return 0;
 }
 
