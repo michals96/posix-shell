@@ -47,6 +47,6 @@ char **parser(char *str)
 
     // For debugging purposes
     //printf("%s %s %s", value.tokens_array[0], value.tokens_array[1], value.tokens_array[2]);
-    
+
     return value.tokens_array;
 }

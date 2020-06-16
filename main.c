@@ -9,6 +9,7 @@
 #include "globals.h"
 
 char *line_of_text = NULL, current_directory[1024];
+const char *FUNCTION[4] = {"<", ">", "|", "&"};
 
 int main()
 {
@@ -37,7 +38,27 @@ int main()
             {
                 chdir(getenv("HOME"));
             }
+            else
+            {
+                chdir(second_input_cmd);
+            }
+            
         }
+
+        else
+        {
+            int k = 1;
+            int i = 0;
+
+            for( i=0; i<4; ++i)
+            {
+                if(strcmp(value.arguments[i], FUNCTION[i]) == 0)
+                {
+                    break;
+                }
+            }
+        }
+        
 
     }
     return 0;
