@@ -8,6 +8,11 @@
 #include "parser.h"
 #include "globals.h"
 
+#define OPTION_FOUND 1
+#define OPTION_NOT_FOUND 0
+#define TRUE 1
+#define OPTIONS 4
+
 char *line_of_text = NULL, current_directory[1024];
 const char *FUNCTION[4] = {"<", ">", "|", "&"};
 
@@ -49,17 +54,51 @@ int main()
         {
             int k = 1;
             int i = 0;
-
+            int ifFoundFlag = 0;
+            //while(value.arguments[k] != NULL) {
+            while(value.arguments[k] != OPTION_NOT_FOUND)
+            {
             for( i=0; i<4; ++i)
             {
-                if(strcmp(value.arguments[i], FUNCTION[i]) == 0)
+                if(strcmp(value.arguments[k], FUNCTION[i]) == 0)
                 {
                     break;
                 }
             }
-        }
-        
 
+            if(i < OPTIONS)
+            {
+                ifFoundFlag = OPTION_FOUND;
+
+                if( i<3 && value.arguments[k+1] == NULL) //missing arg for IOR or Pipe
+                {
+                    break;
+                }
+
+                if(i<2)
+                {
+                    break; // Ioredirect
+                }
+
+                if(i==2)
+                {
+                    break; // pipe
+                }
+
+                if(i==3)
+                {
+                    break; // Background proces
+                }
+
+                break;
+            }
+            k++;
+        }
+        if(ifFoundFlag == OPTION_NOT_FOUND)
+            break; // start background process
+        }
+        free(line_of_text);
+        free(value.arguments);
     }
     return 0;
 }
