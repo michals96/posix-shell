@@ -58,44 +58,44 @@ int main()
             //while(value.arguments[k] != NULL) {
             while(value.arguments[k] != OPTION_NOT_FOUND)
             {
-            for( i=0; i<4; ++i)
-            {
-                if(strcmp(value.arguments[k], FUNCTION[i]) == 0)
+                for( i=0; i<4; ++i)
                 {
+                    if(strcmp(value.arguments[k], FUNCTION[i]) == 0)
+                    {
+                        break;
+                    }
+                }
+
+                if(i < OPTIONS)
+                {
+                    ifFoundFlag = OPTION_FOUND;
+
+                    if( i<3 && value.arguments[k+1] == NULL) //missing arg for IOR or Pipe
+                    {
+                        break;
+                    }
+
+                    if(i<2)
+                    {
+                        break; // Ioredirect
+                    }
+
+                    if(i==2)
+                    {
+                        break; // pipe
+                    }
+
+                    if(i==3)
+                    {
+                        break; // Background proces
+                    }
+
                     break;
                 }
+                k++;
             }
-
-            if(i < OPTIONS)
-            {
-                ifFoundFlag = OPTION_FOUND;
-
-                if( i<3 && value.arguments[k+1] == NULL) //missing arg for IOR or Pipe
-                {
-                    break;
-                }
-
-                if(i<2)
-                {
-                    break; // Ioredirect
-                }
-
-                if(i==2)
-                {
-                    break; // pipe
-                }
-
-                if(i==3)
-                {
-                    break; // Background proces
-                }
-
-                break;
-            }
-            k++;
-        }
-        if(ifFoundFlag == OPTION_NOT_FOUND)
-            break; // start background process
+            if(ifFoundFlag == OPTION_NOT_FOUND)
+                break; // start background process
         }
         free(line_of_text);
         free(value.arguments);
