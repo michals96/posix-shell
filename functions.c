@@ -1,5 +1,4 @@
 #include "functions.h"
-
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/wait.h>
@@ -25,38 +24,35 @@ char **handle_arguments(int type, char **arguments)
 
 void process_executor(int type, char**arguments)
 {
-    int it = 0;
     pid_t pid, wpid;
-
     int status;
 
-    if(it > 0)
+    if(type > 0)
     {
-        arguments[it] = NULL;
+        arguments[type] = NULL; 
     }
 
     pid = fork();
-    
-    if(pid == 0)         
+
+    if(pid == 0)          
     {
         execvp(arguments[0], arguments);
-
-        if(it == 0)
-        {
+        perror("Program execution failed");
+        if(type == 0)
             exit(1);
-        }
     }
-    if(it == 0) 
+    if(type == 0) 
     {
-        while (!WIFEXITED(status) && !WIFSIGNALED(status))
-        {
+        do {
             wpid = waitpid(pid, &status, WUNTRACED);
         } 
-        
+        while (!WIFEXITED(status) && !WIFSIGNALED(status));
     }
-    else {
+    else 
+    {
+        fprintf(stderr,"\n");
         fprintf(stderr, "RUNNING IN BACKGROUND");
+        fprintf(stderr, "\n");
         wpid = waitpid(-1, &status, WNOHANG);
     }
-
 }

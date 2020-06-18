@@ -1,6 +1,5 @@
 #include "parser.h"
 #include "globals.h"
-
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/wait.h>

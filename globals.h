@@ -1,6 +1,5 @@
 #ifndef GLOBALS_H
 #define GLOBALS_H
-
 #include <sys/types.h>
 
 typedef struct globals
@@ -19,3 +18,4 @@ typedef struct globals
 } globals;
 
 #endif
+

@@ -16,94 +16,121 @@
 
 char *line_of_text = NULL, current_directory[1024];
 char *FUNCTION[4] = {"<", ">", "|", "&"};
+char *tmp_pointer = NULL, *home_dir;
+char **input_arguments;
+int ifFoundFlag = 0;
+int it, iterator = 0;
 
-int main()
+int main() 
 {
     globals value;
 
+    home_dir = getenv("HOME");
+    
     while(1)
     {
-        if(getcwd(current_directory, sizeof(current_directory)) != NULL)
-            printf("\n%s ", current_directory);
+        ssize_t size = 0;
+    
+        if(getcwd(current_directory, sizeof(current_directory)) != NULL)  
+        {
+            printf("\n[%s]#", current_directory);
+        } 
+
+        getline(&line_of_text, &size, stdin);
         
-        getline(&line_of_text, &value.size_of_line, stdin);
+        input_arguments = parser(line_of_text); 
 
-       value.arguments = parser(line_of_text);
+        char *first_input_cmd = input_arguments[0];
+        char *second_input_cmd = input_arguments[1];
 
-        char *first_input_cmd = value.arguments[0];
-        char *second_input_cmd = value.arguments[1];
+        // If no command was given
+        if(first_input_cmd == NULL) 
+        {
+            free(line_of_text);
+            free(input_arguments);
+            continue;
+        } 
 
-        if(strcmp(first_input_cmd, "exit") == 0) // EXIT
+        // Handle "exit" command
+        if(strcmp(first_input_cmd,"exit") == 0)    
         {
             break;
+        }    
+
+        // Handle "cd" command
+        else if(strcmp(first_input_cmd,"cd") == 0)
+        {  
+            if(second_input_cmd == NULL) 
+            {              
+                if(home_dir[0] != 0) 
+                {               
+                    chdir(home_dir);
+                }
+            }
+            else 
+            {
+                chdir(first_input_cmd);
+            }
         }
 
-        if(strcmp(first_input_cmd, "cd") == 0) // CD
-        {
-            if(second_input_cmd == NULL && getenv("HOME") == NULL)
-            {
-                chdir(getenv("HOME"));
-            }
-            else
-            {
-                chdir(second_input_cmd);
-            }
-            
-        }
-
+        // Handle other comments
         else
         {
-            int k = 1;
-            int i = 0;
-            int ifFoundFlag = 0;
+            it = 1;
 
-            while(value.arguments[k] != OPTION_NOT_FOUND)
-            {
-                for( i=0; i<4; ++i)
+            while(input_arguments[it] != NULL) 
+            {           
+                for(iterator = 0; iterator < OPTIONS; iterator++) 
                 {
-                    if(strcmp(value.arguments[k], FUNCTION[i]) == 0)
-                    {
+                    if(strcmp(input_arguments[it],FUNCTION[iterator]) == 0) 
                         break;
-                    }
                 }
 
-                if(i < OPTIONS)
+                // One of OPTIONS was found
+                if(iterator < OPTIONS) 
                 {
                     ifFoundFlag = OPTION_FOUND;
 
-                    if( i<3 && value.arguments[k+1] == NULL) //missing arg for IOR or Pipe
+                    if(iterator < 3 && input_arguments[it+1] == NULL) 
+                    {   
+                        break;
+                    }
+
+                    // IORedirection
+                    if(iterator < 2)
+                    {
+                        break;
+                    }                         
+
+                    // Pipe
+                    else if(iterator == 2)
                     {
                         break;
                     }
 
-                    if(i<2)
+                    // Run in background  
+                    else if(iterator == 3)
                     {
-                        break; // Ioredirect
+                        process_executor(it, input_arguments); 
                     }
-
-                    if(i==2)
-                    {
-                        break; // pipe
-                    }
-
-                    if(i==3)
-                    {
-                        process_executor(k, value.arguments); // Background proces
-                    }
-
+                                   
                     break;
                 }
-                k++;
+
+                it++;
             }
+
+            // If IO/Pipe/Background was not found
+            // than handle other commands for instance "ls"
             if(ifFoundFlag == OPTION_NOT_FOUND)
-                process_executor(k, value.arguments);
+            {
+                process_executor(0, input_arguments);      
+            }
+
         }
 
         free(line_of_text);
-        free(value.arguments);
+        free(input_arguments);
 
-    }
-
-    return 0;
-}
-
+    } 
+} 
