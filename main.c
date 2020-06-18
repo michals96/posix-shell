@@ -20,7 +20,6 @@ const char *FUNCTION[4] = {"<", ">", "|", "&"};
 int main()
 {
     globals value;
-    char *ok[1] = {"123"};
 
     while(1)
     {
@@ -89,7 +88,7 @@ int main()
 
                     if(i==3)
                     {
-                        break; // Background proces
+                        process_executor(k, value.arguments); // Background proces
                     }
 
                     break;
@@ -97,7 +96,7 @@ int main()
                 k++;
             }
             if(ifFoundFlag == OPTION_NOT_FOUND)
-                break; // start background process
+                process_executor(k, value.arguments);
         }
 
         free(line_of_text);
