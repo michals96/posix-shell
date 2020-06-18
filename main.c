@@ -7,6 +7,7 @@
 #include <fcntl.h>
 #include "parser.h"
 #include "globals.h"
+#include "functions.h"
 
 #define OPTION_FOUND 1
 #define OPTION_NOT_FOUND 0
@@ -19,6 +20,7 @@ const char *FUNCTION[4] = {"<", ">", "|", "&"};
 int main()
 {
     globals value;
+    char *ok[1] = {"123"};
 
     while(1)
     {
@@ -55,7 +57,7 @@ int main()
             int k = 1;
             int i = 0;
             int ifFoundFlag = 0;
-            //while(value.arguments[k] != NULL) {
+
             while(value.arguments[k] != OPTION_NOT_FOUND)
             {
                 for( i=0; i<4; ++i)
@@ -97,9 +99,12 @@ int main()
             if(ifFoundFlag == OPTION_NOT_FOUND)
                 break; // start background process
         }
+
         free(line_of_text);
         free(value.arguments);
+
     }
+
     return 0;
 }
 
