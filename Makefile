@@ -4,7 +4,7 @@
 CC_C = gcc
 
 all:
-	$(CC_C) *c *h -o posix
+	$(CC_C) -g *c *h -o posix
 
 run:
 	./posix

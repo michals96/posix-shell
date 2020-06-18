@@ -15,7 +15,7 @@
 #define OPTIONS 4
 
 char *line_of_text = NULL, current_directory[1024];
-const char *FUNCTION[4] = {"<", ">", "|", "&"};
+char *FUNCTION[4] = {"<", ">", "|", "&"};
 
 int main()
 {
