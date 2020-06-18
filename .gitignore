@@ -9,6 +9,8 @@
 *.vi
 *.out
 *main
+*tmp.c
+*posix
 *~
 *.sass-cache
 
