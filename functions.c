@@ -13,10 +13,13 @@ int it = 0;
 char **handle_arguments( int type, char **arguments)
 {
     char **tmp = malloc(sizeof(char *) *(type +1));
-    
+
     for(it = 0; it < type; ++it)
     {
         tmp[it] = strdup(arguments[it]);
     }
-    return 0;
+
+    tmp[it] = 0;
+
+    return tmp;
 }
