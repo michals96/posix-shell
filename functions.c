@@ -155,3 +155,8 @@ void redirect(int type, char **arguments, int input_output)
         while (!WIFEXITED(status) && !WIFSIGNALED(status));
     }        
 }
+
+void pipeIO(int type, char **arguments)
+{
+
+}
