@@ -1,6 +1,5 @@
 #include "functions.h"
 #include <stdio.h>
-#include <unistd.h>
 #include <sys/wait.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,6 +9,15 @@
 
 #define SIZE_OF_TOKEN 64
 #define TOKENS " \t\r\n\a"
+// bits for access permission taken from 
+// https://pubs.opengroup.org/onlinepubs/007904975/functions/open.html
+#define PERMISSION_BITS S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH
+
+#define FALSE 0
+
+// bitwise operation of O_WRONLY|O_CREAT|O_TRUNC, taken from
+// http://students.mimuw.edu.pl/SO/Linux/Temat06/open.html
+#define FLAG_MAKRO 577
 
 char **handle_arguments(int type, char **arguments)
 {
@@ -95,7 +103,54 @@ char **parser(char *str)
     return value.tokens_array;
 }
 
-void redirection(int type, char **arguments)
+void pipe(int type, char **arguments, int input_output)
 {
+    pid_t pid, wpid;
     
+    int fd, status = 0;
+    
+    pid = fork();
+
+    if (pid == 0) 
+    {
+        if(input_output == 0)  
+        {
+            fd = open(arguments[type+1], FALSE, PERMISSION_BITS);
+        }
+            
+        else
+        {
+            fd = open(arguments[type+1], FLAG_MAKRO, PERMISSION_BITS);
+        }         
+            
+
+        if( fd >= 0)
+        {
+        
+            dup2(fd, input_output);   
+            close(fd);       
+            arguments[type] = NULL;
+            arguments[type+1] = NULL;
+
+            if (execvp(arguments[0], arguments) == -1) 
+            {
+                printf("error");
+            }
+
+            exit(EXIT_FAILURE);
+        }
+    }
+    else if (pid < 0) 
+    { 
+        printf("error");
+    } 
+    else 
+    {
+        
+        do 
+        {
+            wpid = waitpid(pid, &status, WUNTRACED);
+        } 
+        while (!WIFEXITED(status) && !WIFSIGNALED(status));
+    }        
 }

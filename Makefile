@@ -4,7 +4,7 @@
 CC_C = gcc
 
 all:
-	$(CC_C) -g *c *h -o posix
+	$(CC_C) -g  *c *h -o posix -Wimplicit-function-declaration
 
 run:
 	./posix
