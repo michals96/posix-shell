@@ -8,6 +8,9 @@
 #include <fcntl.h>
 #include "globals.h"
 
+#define SIZE_OF_TOKEN 64
+#define TOKENS " \t\r\n\a"
+
 char **handle_arguments(int type, char **arguments)
 {
     int it = 0;
@@ -58,9 +61,6 @@ void process_executor(int type, char**arguments)
     }
 }
 
-#define SIZE_OF_TOKEN 64
-#define TOKENS " \t\r\n\a"
-
 char **parser(char *str)
 {
     globals value;
@@ -93,4 +93,9 @@ char **parser(char *str)
     //printf("%s %s %s", value.tokens_array[0], value.tokens_array[1], value.tokens_array[2]);
 
     return value.tokens_array;
+}
+
+void redirection(int type, char **arguments)
+{
+    
 }

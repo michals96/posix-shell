@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <fcntl.h>
-#include "parser.h"
 #include "globals.h"
 #include "functions.h"
 
