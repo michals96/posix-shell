@@ -1,11 +1,9 @@
 #include <stdio.h>
-#include <unistd.h>
 #include <sys/wait.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <fcntl.h>
-#include "parser.h"
 #include "globals.h"
 #include "functions.h"
 
@@ -30,7 +28,8 @@ int main()
     while(1)
     {
         ssize_t size = 0;
-    
+        ifFoundFlag = 0;
+        
         if(getcwd(current_directory, sizeof(current_directory)) != NULL)  
         {
             printf("\n[%s]#", current_directory);
@@ -99,7 +98,7 @@ int main()
                     // IORedirection
                     if(iterator < 2)
                     {
-                        break;
+                        pipe(it, input_arguments, iterator);
                     }                         
 
                     // Pipe
