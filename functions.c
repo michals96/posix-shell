@@ -6,6 +6,7 @@
 #include <string.h>
 #include <fcntl.h>
 #include "globals.h"
+#include <unistd.h> 
 
 #define SIZE_OF_TOKEN 64
 #define TOKENS " \t\r\n\a"
@@ -103,7 +104,7 @@ char **parser(char *str)
     return value.tokens_array;
 }
 
-void pipe(int type, char **arguments, int input_output)
+void redirect(int type, char **arguments, int input_output)
 {
     pid_t pid, wpid;
     

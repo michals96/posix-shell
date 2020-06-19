@@ -6,6 +6,7 @@
 #include <fcntl.h>
 #include "globals.h"
 #include "functions.h"
+#include <unistd.h> 
 
 #define OPTION_FOUND 1
 #define OPTION_NOT_FOUND 0
@@ -98,7 +99,7 @@ int main()
                     // IORedirection
                     if(iterator < 2)
                     {
-                        pipe(it, input_arguments, iterator);
+                        redirect(it, input_arguments, iterator);
                     }                         
 
                     // Pipe
