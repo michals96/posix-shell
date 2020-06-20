@@ -1,11 +1,18 @@
+/**
+    main.c
+    Purpose: Core of posix-shell application
+    @author Michal Stefaniuk
+    @version 1.0
+*/
+#include "globals.h"
+#include "functions.h"
+
 #include <stdio.h>
 #include <sys/wait.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <fcntl.h>
-#include "globals.h"
-#include "functions.h"
 #include <unistd.h> 
 
 #define OPTION_FOUND 1
