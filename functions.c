@@ -158,5 +158,5 @@ void redirect(int type, char **arguments, int input_output)
 
 void pipeIO(int type, char **arguments)
 {
-
+    // handle pipe
 }
