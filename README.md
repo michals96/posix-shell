@@ -32,4 +32,4 @@ Simple shell allowing to run other programs
 * `cat file.txt | head -1`
 * `sort file.txt | uniq `
 * `ls &`
-* `ps` - to see if above was run in background (<defunct> mode)
+* `ps` - to see if above was run in background (defunct mode)
