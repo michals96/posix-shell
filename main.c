@@ -4,6 +4,7 @@
     @author Michal Stefaniuk
     @version 1.0
 */
+
 #include "globals.h"
 #include "functions.h"
 
