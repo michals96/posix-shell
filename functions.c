@@ -155,3 +155,37 @@ void redirect(int type, char **arguments, int input_output)
         while (!WIFEXITED(status) && !WIFSIGNALED(status));
     }        
 }
+
+void pipeIO(int type, char **arguments)
+{
+    int new_pipe[2];
+    char **input_arguments;
+
+    input_arguments = handle_arguments(type, arguments);
+    
+    if(pipe(new_pipe) == -1) 
+    {  
+        return;
+    }
+
+    if(fork() == 0)
+    {
+        dup2(new_pipe[1], STDOUT_FILENO);       
+        close(new_pipe[0]);     
+        close(new_pipe[1]);     
+        execvp(input_arguments[0], input_arguments);   
+    }
+
+    if(fork() == 0)
+    {
+        dup2(new_pipe[0], STDIN_FILENO);            
+        close(new_pipe[1]);       
+        close(new_pipe[0]);       
+        execvp(arguments[type+1], arguments+type+1);     
+    }
+
+    close(new_pipe[0]);
+    close(new_pipe[1]);
+    wait(0);  
+    wait(0);   
+}

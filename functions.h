@@ -4,6 +4,7 @@
 char **handle_arguments(int type, char **arguments);
 void process_executor(int type, char**arguments);
 void redirect(int type, char **arguments, int input_output);
+void pipeIO(int type, char **arguments);
 
 
 /* This function will take command line as input and it will split it into tokens for example

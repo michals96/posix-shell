@@ -105,7 +105,7 @@ int main()
                     // Pipe
                     else if(iterator == 2)
                     {
-                        break;
+                        pipeIO(it, input_arguments);
                     }
 
                     // Run in background  
