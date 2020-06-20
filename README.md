@@ -26,10 +26,17 @@ Simple shell allowing to run other programs
 # Example commands
 
 * `cd ..`
+
 * `cd directory_name`
+
 * `exit`
+
 * `ls > file.txt`
+
 * `cat file.txt | head -1`
+
 * `sort file.txt | uniq `
+
 * `ls &`
+
 * `ps` - to see if above was run in background (defunct mode)
