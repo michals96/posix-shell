@@ -1,7 +1,10 @@
 # posix-shell
+*Programming in UNIX systems 202*0  
+**Michal Stefaniuk**  
+## Project target
 Simple shell allowing to run other programs
 
-# How to run
+## How to run
 
 * `make` to build the project
 
@@ -9,7 +12,7 @@ Simple shell allowing to run other programs
 
 * `make clean` to clean the project
 
-# Supported features
+## Supported features
 
 * `cd`
 
@@ -23,7 +26,7 @@ Simple shell allowing to run other programs
 
 * All linux commands that could be executed in one argument
 
-# Example commands
+## Example commands
 
 * `cd ..`
 
