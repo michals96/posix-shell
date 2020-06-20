@@ -1,12 +1,21 @@
-#include "functions.h"
+/**
+    functions.c
+    Purpose: Gathers definitions of functions declared in functions.h
+    @author Michal Stefaniuk
+    @version 1.0
+*/
+
+#include <unistd.h> 
 #include <stdio.h>
 #include <sys/wait.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <fcntl.h>
+
 #include "globals.h"
-#include <unistd.h> 
+#include "functions.h"
+
 
 #define SIZE_OF_TOKEN 64
 #define TOKENS " \t\r\n\a"
@@ -50,13 +59,17 @@ void process_executor(int type, char**arguments)
     if(pid == 0)          
     {
         execvp(arguments[0], arguments);
-        perror("Program execution failed");
+
         if(type == 0)
+        {
             exit(1);
+        }
+
     }
     if(type == 0) 
     {
-        do {
+        do 
+        {
             wpid = waitpid(pid, &status, WUNTRACED);
         } 
         while (!WIFEXITED(status) && !WIFSIGNALED(status));
@@ -186,6 +199,7 @@ void pipeIO(int type, char **arguments)
 
     close(new_pipe[0]);
     close(new_pipe[1]);
+    
     wait(0);  
     wait(0);   
 }
