@@ -77,7 +77,7 @@ int main()
             }
             else 
             {
-                chdir(first_input_cmd);
+                chdir(input_arguments[1]);
             }
         }
 
